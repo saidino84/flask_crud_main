@@ -2,7 +2,7 @@
 passos principais pra fazer um CRUD no Flask
 > ```flask_sqlalchemy ``` =- as dabtabse orm
 > ```flask_migrate```  to migrate easly our database
-> ```flask_marshmallow``` >> lib usado pra serializar as nossas tabelas de manera mais fácil
+> ```flask_marshmallow``` >> lib usado pra serializar as nossas tabelas de manera mais fácil ```to use it you have to isntall to > pipenv install marshmallow-sqlalchemy```
 
 # COMO RODAR ESTE APP
 ```sh
@@ -34,4 +34,7 @@ seria um lib de migracao de banco de dados com mais facilidade
 
 >tendo rodado o flask migrate noa] arquivo migration ja vai ser gerado um arquivo com nome stranho contendo as tabelas que criaste 
  e a primeira versao do banco k é 1; e se der um ``` caso quer modificar atabela uma coluna ou sei la qualquer coisa no database voce precisa dar um flask db migrate de novo assim ele vai gerar outro arquivo de versoa 2 contendo downgrade como o arquivo de versao 2 ``` ele  ja vai incrementar aversao do banco
- 
+
+
+ #Marshmellow
+ > lib usado pra serializar os modelos de uma forma mais adequado
