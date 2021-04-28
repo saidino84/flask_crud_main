@@ -1,12 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
+from . import  db #estou importando db no arquivo __init__
 
-db =SQLAlchemy()
 
-def configure(app):
-    db.init_app(app)
-    app.db = db
 
-class Produto(db.Model):
+class Product(db.Model):
     '''esta tabela de produto contem como colunas:
     id, prece , name, 
     '''
@@ -14,5 +11,7 @@ class Produto(db.Model):
     price =db.Column(db.Integer)
     name =db.Column(db.String)
     image_data =db.Column(db.String)
-    description =db.Column(db.String)
+    details =db.Column(db.String)
+    category =db.Column(db.String)
+
 
