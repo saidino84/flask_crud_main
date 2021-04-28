@@ -46,4 +46,7 @@ def create_app():
     #todo CONFIGURANDO OS MEUS BLUEPRINTS
     from .views.products import bp_product
     app.register_blueprint(bp_product, url_prefix='/product')
+    
+    from .views.books import nam, bp_book
+    app.register_blueprint(bp_book, url_prefix='/book')
     return app

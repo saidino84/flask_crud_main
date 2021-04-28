@@ -38,3 +38,24 @@ seria um lib de migracao de banco de dados com mais facilidade
 
  #Marshmellow
  > lib usado pra serializar os modelos de uma forma mais adequado
+
+ ```py
+from app.models.book import Book
+from app.models.serealizer import  BookSchema
+nam='saide'
+
+
+bp_book =Blueprint('books',__name__, static_folder='static',template_folder='templates')
+
+@bp_book.route('/mostrar', methods=['GET'])
+@bp_book.route('/',methods=['GET'])
+def mostrar():
+    'ENTRANDO NO BLUEPRINT DE PRODUTS'
+    
+    books=BookSchema(many=True) #ele vai rederizar todos os campos de BookModel
+    result =Book.query.all()
+    jso=books.jsonify(result)
+    #vai trazer alista em json dos books se tiver cadastrado
+    return books.jsonify(result)
+
+ ```

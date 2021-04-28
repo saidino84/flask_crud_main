@@ -5,6 +5,7 @@ integrar no vetor das routas de uma maneira mais fácil
 from flask_marshmallow import Marshmallow
 # from marshmallow_sqlalchemy import ModelShema
 from .products import Product
+from .book import  Book
 
 ma =Marshmallow()
 
@@ -35,3 +36,8 @@ class ProductSchema(ma.Schema):
     details =db.Column(db.String)\
     category =db.Column(db.String)
 '''
+
+class BookSchema(ma.Schema):
+    'serializer of books'
+    class Meta:
+        model =Book
