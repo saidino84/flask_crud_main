@@ -16,7 +16,10 @@ bp_product =Blueprint('produtos',__name__)
 @bp_product.route('/',methods=['GET'])
 def mostrar():
     'ENTRANDO NO BLUEPRINT DE PRODUTS'
-    
+    bs =Product.query.all()
+    return jsonify(bs)
+
+
     return render_template('home.html')
 
 @bp_product.route('/deletar', methods=['DELETE'])
