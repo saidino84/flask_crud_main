@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,render_template,request
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from .models import configure as configure_db
@@ -16,6 +16,7 @@ e ai so dar flask run  //flask db init {se ainda nao tem migrations} flask db mi
 
 def create_app():
     app=Flask(__name__)
+    app.config['DEBUG']=True
     #2 configurando o bootstrap
     Bootstrap(app)
     #3 configurando o database
@@ -49,4 +50,16 @@ def create_app():
     
     from .views.books import nam, bp_book
     app.register_blueprint(bp_book, url_prefix='/book')
+    
+    # ''' esta é a forma de registar uma funcao que tem como rota ale de atribuir o decorador @app.route('/user<username>') '''
+    # app.add_url_rule('/user/<username>', view_func=user_profile, endpoint='user', methods=['POST','GET'])
+    app.add_url_rule('/', view_func =default, endpoint='/', methods=['get','post'])
     return app
+
+
+
+def default():
+    'routa sera definida de uma forma inteligente'
+    print('Main Home it il go out now')
+    print(request.method)
+    return render_template('index.html')

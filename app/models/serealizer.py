@@ -25,7 +25,7 @@ class ProductSchema(ma.Schema):
     'serializador de Product'
     class Meta:
         model =Product
-        # filds=('id','price','name','image_data','details','category')
+        fields=('id','price','name','image_data','details','category')
 
 
 '''\ colunas do modelo produtos\
@@ -41,3 +41,4 @@ class BookSchema(ma.Schema):
     'serializer of books'
     class Meta:
         model =Book
+        fields = ('id','name','autor')
