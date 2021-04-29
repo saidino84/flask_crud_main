@@ -1,5 +1,11 @@
 # flask_crud_main
-passos principais pra fazer um CRUD no Flask
+Experiencia com um crud flask e suas feramentas
+- Flask
+- flask_sqlalchemy
+- flask_migrate
+- flask_marshmallow
+- marshmallow_sqlachemy
+
 > ```flask_sqlalchemy ``` =- as dabtabse orm
 > ```flask_migrate```  to migrate easly our database
 > ```flask_marshmallow``` >> lib usado pra serializar as nossas tabelas de manera mais fácil ```to use it you have to isntall to > pipenv install marshmallow-sqlalchemy```
@@ -10,6 +16,11 @@ export FLASK_APP=app
 colacando em modo de desenvolvimento
 export FLASK_ENV=Development
 export FLASK_DEBUG=TRUE
+
+como fazer as migracoes:
+flask db init
+flask db migrate
+flask db upgrade
 
 flask run --host=0.0.0.0
 ```
