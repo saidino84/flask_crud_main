@@ -32,3 +32,7 @@ def actualizar():
 @bp_product.route('/cadastrar', methods=['POST'])
 def cadastrar():
     ...
+
+@bp_product.route('/brincadera', methods=['GET','POST'])
+def brincar():
+    return render_template('hoobs.html')

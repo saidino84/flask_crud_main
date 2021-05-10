@@ -54,6 +54,7 @@ def create_app():
     # ''' esta é a forma de registar uma funcao que tem como rota ale de atribuir o decorador @app.route('/user<username>') '''
     # app.add_url_rule('/user/<username>', view_func=user_profile, endpoint='user', methods=['POST','GET'])
     app.add_url_rule('/', view_func =default, endpoint='/', methods=['get','post'])
+    app.add_url_rule("/dashboard", view_func=dashboard, endpoint='/dashboard', methods=['GET','POST'])
     return app
 
 
@@ -63,3 +64,14 @@ def default():
     print('Main Home it il go out now')
     print(request.method)
     return render_template('index.html')
+
+def dashboard():
+    'routa de dashboard'
+
+    return render_template('home.html')
+
+
+if __name__ == '__main__':
+    app=create_app()
+    app.run(debug=True, host='0.0.0.0')
+    

@@ -7,5 +7,8 @@ class Book(db.Model):
     name =db.Column(db.String(255))
     autor =db.Column(db.String(255))
 
+     
+    
+
     def __repr__(self):
-        return f'Book(id={self.id} name={sel.name} autor={self.autor}'
+        return f'Book(id={self.id} name={self.name} autor={self.autor}'

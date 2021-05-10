@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="/book/cadastrar" method='post'>
+    <div class="form-group">
+        <label for='autor' >Nome do autor</label>
+        <input type='text' class='form-control' name='autor' id='autor' placeholder='digite o nome do autor do livro'/>
+    </div>
+
+    <div class="form-group">
+        <label for='book_name' >Nome do autor</label>
+        <input type='text' class='form-control' name='book_name' id='book_name' placeholder='digite o nome do autor do livro'/>
+    </div>
+
+    <div class="checkbox">
+        <label>
+        <input type='checkbox' name='isFavorite'> Favorito
+        </label> 
+    </div>
+
+    <button type='submit' class='btn btn-primary'>Salvar</button>
+
+</form>
+
+
+{% endblock %}

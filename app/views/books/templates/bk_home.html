@@ -1,0 +1,64 @@
+{% extends 'base.html'%}
+
+{% block title %} Cadastro de Books {% endblock %}
+
+{% block navbar %}
+<style>
+  .name{
+    color: rgb(50, 65, 202);
+    font: size 14px;
+    font-weight: bold;
+  }
+</style>
+<div class='navbar navbar-fixed-top'>
+
+</div>
+{% endblock %}
+{% block content %}
+<div class="container py-3">
+    <header class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+        <span class="fs-4">Books List is ({{size}})</span>
+      </a>
+  
+      <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+        <a class="me-3 py-2 text-dark text-decoration-none" href="#">Adicionar </a>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="#">Enterprise</a>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="#">Support</a>
+        <a class="py-2 text-dark text-decoration-none" href="#">Preços</a>
+      </nav>
+    </header>
+       <div class="row">
+         <div class="col-xs-12">
+           <a href="/book/cadastrar">Adicionar Livrro </a>
+           <p>Livros total {{size}}</p>
+         <table class='table'>
+           <thead>
+             <th>id</th>
+             <th>Nome</th>
+             <th>Autor</th>
+             <th>Actions</th>
+           </thead>
+           <tbody>
+             {%for book in books %}
+             <tr>
+               <td>{{book.id}}</td>
+               <td><span class='name'>{{book.name.split("e")[0]}}</span></td>
+               <td>{{book.autor}}</td>
+               <td>
+                 <a href='/book/modify/{{book.id}}'>Editar</a>
+                 <a href='/book/deletar/{{book.id}}'>Deletar</a>
+               </td>
+             </tr>
+             {% endfor %}
+           </tbody>
+         </table>
+         </div>
+       </div>
+
+
+      
+
+</div>
+
+{% endblock %}

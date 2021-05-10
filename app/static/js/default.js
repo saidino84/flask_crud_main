@@ -1,1 +1,2 @@
-prompt('WHat is your name??')
+// prompt('WHat is your name??')
+console.log('default js has loaded')
