@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="/book/modify/{{book.id}}" method='post'>
+    <div class="form-group">
+        <label for='autor' >Nome do livro</label>
+        <input type='text' value='{{book.name}}' class='form-control' name='name' id='name' placeholder='digite o nome do autor do livro'/>
+    </div>
+{{book.autor}}
+    <div class="form-group">
+        <label for='autor'  >Nome do autor</label>
+        <input type='text' value='{{book.autor}}' class='form-control' name='autor' id='autor' placeholder='digite o nome do autor do livro'/>
+    </div>
+
+    <div class="checkbox">
+        <label>
+        <input type='checkbox' name='isFavorite' > Favorito
+        </label> 
+    </div>
+
+    <button type='submit' class='btn btn-primary'>Salvar</button>
+
+</form>
+
+
+{% endblock %}

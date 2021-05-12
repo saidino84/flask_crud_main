@@ -23,7 +23,8 @@ def cadastrar_livro():
     #todo cadastrar
     if request.method=='POST':
         form=request.form.to_dict();
-        book =Book(autor=form['autor'],name=form['book_name'])
+        # return jsonify(form)
+        book =Book(autor=form['book_autor'],name=form['book_name'])
         current_app.db.session.add(book)
         current_app.db.session.commit()
         print('Salvo com sucesso')
@@ -33,9 +34,27 @@ def cadastrar_livro():
 
 @bp_book.route('/modify/<id>',methods=['POST','GET'])
 def modificar(id):
-    if request.method=='GET':
-        return 'Modificar item {}'.format(id)
-    return 'NOT IMPLEMENTED', 400
+    print('Modifyng')
+    book=Book.query.filter(Book.id==id).first()
+    print(book)
+    if request.method=='POST':
+        form=request.form.to_dict()
+        for k,v in form.items():
+            if v !=None and len(v)>=4:
+                try:
+                    book=Book.query.filter(Book.id==id)
+                    book.update(form)
+                    current_app.db.session.commit()
+                    return 'Modificado com sucesso !'
+                except Exception as err:
+                    print(str(err))
+                    return redirect(request.url)
+            print('Falhou')
+            return redirect(request.url)
+        
+
+    print('Getting back to HOme')
+    return render_template('modificar.html',book=book )
     # print('Modificar '+id)
     # book=Book.query.filter(Book.id ==id)
     # book.update(request.json)
@@ -55,6 +74,15 @@ def deletar(id):
     return redirect(url_for('books.mostrar'))
     ...
 
+class Valiadator:
+    def __call__(name, autor):
+        try:
+            if name !=None or name.length<5:
+                raise Exeption(f'{name} is invalid')
+        except Exeption as err :
+            print(str(err))
+        finally:
+            print(' thanks for the request')
 
 
 
@@ -99,7 +127,7 @@ def mostrar_api():
 def modificar_api(id):
     'Funcionou cara'
     print('Modificar '+id)
-    book=Book.query.filter(Book.id ==id)
+    book=Book.query.filter(Book.id ==int(id))
     book.update(request.json)
     current_app.db.session.commit()
     bs=BookSchema()

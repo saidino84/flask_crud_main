@@ -17,9 +17,7 @@
 {% block content %}
 <div class="container py-3">
     <header class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-      <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-        <span class="fs-4">Books List is ({{size}})</span>
-      </a>
+      
   
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         <a class="me-3 py-2 text-dark text-decoration-none" href="#">Adicionar </a>
@@ -28,6 +26,9 @@
         <a class="py-2 text-dark text-decoration-none" href="#">Preços</a>
       </nav>
     </header>
+    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+      <span class="fs-4">Books List is ({{size}})</span>
+    </a>
        <div class="row">
          <div class="col-xs-12">
            <a href="/book/cadastrar">Adicionar Livrro </a>
@@ -43,7 +44,7 @@
              {%for book in books %}
              <tr>
                <td>{{book.id}}</td>
-               <td><span class='name'>{{book.name.split("e")[0]}}</span></td>
+               <td><span class='name'>{{book.name}}</span></td>
                <td>{{book.autor}}</td>
                <td>
                  <a href='/book/modify/{{book.id}}'>Editar</a>

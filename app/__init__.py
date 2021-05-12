@@ -1,6 +1,9 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,jsonify
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
+from flask_mail import Mail, Message
+from itsdangerous import URLSafeTimedSerializer
+
 from .models import configure as configure_db
 from .models.products import Product
 from .models.serealizer import configure as configure_ma # configure_marshmallow
@@ -13,9 +16,13 @@ export FLASK_ENV=Development
 e ai so dar flask run  //flask db init {se ainda nao tem migrations} flask db migrate
 
 '''
-
+s=URLSafeTimedSerializer('This is secret')
 def create_app():
     app=Flask(__name__)
+    
+    s=URLSafeTimedSerializer('This is secret')
+    # configurado as imformacoes do meu email
+    app.config.from_pyfile('config.cfg')
     app.config['DEBUG']=True
     #2 configurando o bootstrap
     Bootstrap(app)
@@ -55,8 +62,21 @@ def create_app():
     # app.add_url_rule('/user/<username>', view_func=user_profile, endpoint='user', methods=['POST','GET'])
     app.add_url_rule('/', view_func =default, endpoint='/', methods=['get','post'])
     app.add_url_rule("/dashboard", view_func=dashboard, endpoint='/dashboard', methods=['GET','POST'])
+    app.add_url_rule('/login', view_func=login, endpoint='/login-page', methods=['POST','GET'])
+    
     return app
 
+
+
+def login():
+
+    print('Please login in to our page'+ request.method)
+    if request.method=='POST':
+        email=request.form['email']
+        token=s.dumps(email, salt='email-confirm')
+        return jsonify({'dados':request.form.to_dict(),'token':token})
+        
+    return render_template('login.html')
 
 
 def default():

@@ -12,6 +12,8 @@ flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 flask-jwt-extended = "*"
 requests = "*"
+flask-email = "*"
+flask-mail = "*"
 
 [dev-packages]
 
