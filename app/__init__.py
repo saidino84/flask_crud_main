@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,jsonify
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from flask_mail import Mail, Message
-from itsdangerous import URLSafeTimedSerializer
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
 from .models import configure as configure_db
 from .models.products import Product
@@ -62,21 +62,36 @@ def create_app():
     # app.add_url_rule('/user/<username>', view_func=user_profile, endpoint='user', methods=['POST','GET'])
     app.add_url_rule('/', view_func =default, endpoint='/', methods=['get','post'])
     app.add_url_rule("/dashboard", view_func=dashboard, endpoint='/dashboard', methods=['GET','POST'])
-    app.add_url_rule('/login', view_func=login, endpoint='/login-page', methods=['POST','GET'])
+    # app.add_url_rule('/login', view_func=login, endpoint='/login-page', methods=['POST','GET'])
     
+    # return app
+
+
+    @app.route('/login', methods=['POST','GET'])
+    def login():
+
+        print('Please login in to our page'+ request.method)
+        if request.method=='POST':
+            email=request.form['email']
+            token=s.dumps(email, salt='email-confirm')
+            return jsonify({'dados':request.form.to_dict(),'token':token})
+            
+        return render_template('login.html')
+    
+
+    
+    @app.route('/confirm_token/<token>')
+    def confirmtoken(token):
+        try:
+            email=s.loads(token, salt='email-confirm', max_age=20)
+            return 'the token is steel working fine'
+        except SignatureExpired as expirou:
+            return '<h2> o token ja expirou</h2>'
+
+        return 'The token is workingg'
+
+
     return app
-
-
-
-def login():
-
-    print('Please login in to our page'+ request.method)
-    if request.method=='POST':
-        email=request.form['email']
-        token=s.dumps(email, salt='email-confirm')
-        return jsonify({'dados':request.form.to_dict(),'token':token})
-        
-    return render_template('login.html')
 
 
 def default():
