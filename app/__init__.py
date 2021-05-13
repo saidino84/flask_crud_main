@@ -1,9 +1,9 @@
-from flask import Flask,render_template,request,jsonify
+from flask import Flask,render_template,request,jsonify,url_for
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
-
+from config import  config_app
 from .models import configure as configure_db
 from .models.products import Product
 from .models.serealizer import configure as configure_ma # configure_marshmallow
@@ -26,6 +26,7 @@ def create_app():
     app.config['DEBUG']=True
     #2 configurando o bootstrap
     Bootstrap(app)
+    mail=Mail(app)
     #3 configurando o database
     app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///storage/tables.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
@@ -36,6 +37,7 @@ def create_app():
     configure_db(app)
     #todo:[]3.2 configurando o marshmallow com ao meu app
     configure_ma(app)
+    config_app(app)
 
     #todo[] 4: configurando migraceos do banco
     # Todo:  >> as configuracoes de migracao precisa primero k vc configure o banco primeiro e
@@ -74,6 +76,12 @@ def create_app():
         if request.method=='POST':
             email=request.form['email']
             token=s.dumps(email, salt='email-confirm')
+
+            # criando mesage para enviar 
+            msg=Message('Cofirme o Email', sender='tylorguy2018@gmail.com', recipients=[email])
+            link=url_for('confirm_token', token=token,external=True)
+            msg.body='Your link is {}'.format(link)
+            mail.send(msg)
             return jsonify({'dados':request.form.to_dict(),'token':token})
             
         return render_template('login.html')
@@ -81,9 +89,9 @@ def create_app():
 
     
     @app.route('/confirm_token/<token>')
-    def confirmtoken(token):
+    def confirm_token(token):
         try:
-            email=s.loads(token, salt='email-confirm', max_age=20)
+            email=s.loads(token, salt='email-confirm', max_age=50)
             return 'the token is steel working fine'
         except SignatureExpired as expirou:
             return '<h2> o token ja expirou</h2>'
